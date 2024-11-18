@@ -1,0 +1,5 @@
+{
+  "tailwindConfig": "./tailwind.config.js",
+  "tabWidth": 2,
+  "plugins": ["prettier-plugin-tailwind"]
+}
