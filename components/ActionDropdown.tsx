@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -24,10 +23,10 @@ import Link from 'next/link';
 import { constructDownloadUrl } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { set } from 'zod';
 import { deleteFile, renameFile, updateFileUsers } from '@/lib/actions/file.actions';
 import { usePathname } from 'next/navigation';
 import { FileDetails, ShareInput } from './ActionsModalContent';
+import { ActionType } from '@/types';
 
 const ActionDropdown = ({ file }: { file: Models.Document}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -65,7 +64,15 @@ const ActionDropdown = ({ file }: { file: Models.Document}) => {
     setIsLoading(false)
   }
 
-  const handleRemoveUser = () => {}
+  const handleRemoveUser = async (email: string) => {
+    const updatedEmails = emails.filter((e) => e !== email)
+
+    const success = await updateFileUsers({fileId: file.$id, emails: updatedEmails, path})
+
+    if(success) setEmails(updatedEmails)
+
+    closeAllModals()
+  }
 
   const renderDialogContent = () => {
     if(!action) return null;
@@ -73,7 +80,7 @@ const ActionDropdown = ({ file }: { file: Models.Document}) => {
     const { value, label } = action;
 
     return (
-      <DialogContent className='shad-dialog-button'>
+      <DialogContent className='shad-dialog button'>
         <DialogHeader className='flex flex-col gap-3'>
           <DialogTitle className='text-center text-light-100'>
             {label}
@@ -86,7 +93,13 @@ const ActionDropdown = ({ file }: { file: Models.Document}) => {
             />
           )}
           {value === 'details' && <FileDetails file={file} />}
-          {value === 'share' && <ShareInput file={file} onInputChange={setEmails} onRemove={handleRemoveUser} />}
+          {value === 'share' && (
+            <ShareInput 
+              file={file} 
+              onInputChange={setEmails} 
+              onRemove={handleRemoveUser} 
+            />
+          )}
           {value === 'delete' && (
             <p className='delete-confirmation'>
               Are you sure you want to delete{' '}

@@ -6,12 +6,7 @@ import { convertFileSize, formatDateTime } from '@/lib/utils'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import Image from 'next/image'
-
-interface ShareInputProps {
-  file: Models.Document,
-  onInputChange: React.Dispatch<React.SetStateAction<string[]>>,
-  onRemove: (email: string) => void
-}
+import { ShareInputProps } from '@/types'
 
 const ImageThumbnail = ({ file }: { file: Models.Document}) => (
   <div className='file-details-thumbnail'>
@@ -72,7 +67,10 @@ export const ShareInput = ({ file, onInputChange, onRemove }: ShareInputProps) =
 
           <ul className='pt-2'>
             {file.users.map((email: string) => (
-              <li key={email} className='flex justify-between items-center gap-2'>
+              <li 
+                key={email} 
+                className='flex items-center justify-between gap-2'
+              >
                 <p className='subtitle-2'>{email}</p>
                 <Button onClick={() => onRemove(email)} className='share-remove-user'>
                   <Image

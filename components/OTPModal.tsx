@@ -31,9 +31,9 @@ const OTPModal = ({ accountId, email }: { accountId: string; email: string }) =>
     setIsLoading(true)
 
     try {
-      const sessioId = await verifyOTP({ accountId, otp: password });
+      const sessionId = await verifyOTP({ accountId, otp: password });
 
-      if (sessioId) {
+      if (sessionId) {
         router.push("/");
       }
     } catch (error) {

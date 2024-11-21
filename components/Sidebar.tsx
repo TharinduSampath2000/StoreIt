@@ -67,7 +67,7 @@ const Sidebar = ({ fullName, avatar, email }: { fullName: string; avatar: string
 
       <div className='sidebar-user-info'>
         <Image
-          src='/assets/images/avatar.png'
+          src={avatar}
           alt='Avatar'
           width={44}
           height={44}

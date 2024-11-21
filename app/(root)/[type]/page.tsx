@@ -3,7 +3,18 @@ import Sort from '@/components/Sort';
 import { getFiles } from '@/lib/actions/file.actions';
 import { getFileTypesParams } from '@/lib/utils';
 import { Models } from 'node-appwrite';
-import React from 'react'
+
+type FileType = "video" | "audio" | "document" | "image" | "other";
+
+interface SearchParamProps {
+  searchParams: {
+    query?: string;
+    sort?: string;
+  };
+  params: {
+    type?: string;
+  };
+}
 
 const page = async ({ searchParams, params }: SearchParamProps) => {
   const type= ((await params)?.type as string) || '';
@@ -25,10 +36,9 @@ const page = async ({ searchParams, params }: SearchParamProps) => {
           </p>
 
           <div className='sort-container'>
-            <p className='body-1 hidden sm:block text-light-200'>
+            <p className='body-1 hidden text-light-200 sm:block'>
               Sort by:
             </p>
-
             <Sort />
           </div>
         </div>

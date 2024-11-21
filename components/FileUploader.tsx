@@ -43,7 +43,9 @@ const FileUploader = ({ ownerId, accountId, className }: FileUploaderProps) => {
 
       return uploadFile({ file, ownerId, accountId, path }).then(
         (uploadedFile) => {
-          setFiles(files.filter((f) => f.name !== file.name))
+          if (uploadedFile) {
+            setFiles((files) => files.filter((f) => f.name !== file.name))
+          }
         });
     })
     await Promise.all(uploadPromises)

@@ -11,10 +11,10 @@ import FormattedDateTime from './FormattedDateTime';
 import { useDebounce } from "use-debounce"
 
 const Search = () => {
-  const [query, setQuery] = useState<string>('')
+  const [query, setQuery] = useState('')
   const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('query');
-  const {results, setResults} = useState<Models.Document[]>([]);
+  const searchQuery = searchParams.get('query') || '';
+  const [results, setResults] = useState<Models.Document[]>([]);
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
